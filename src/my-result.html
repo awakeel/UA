@@ -1,0 +1,38 @@
+
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-result">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        margin-bottom:5px;
+      }
+
+    </style>
+      <template is="dom-repeat" items="{{deals}}" rendered-item-count="{{renderedCount}}">
+          <div class="card">
+              <h4>{{item.departure}} > {{item.arrival}}   {{item.cost}} {{currency}}</h4>
+              <p>{{item.transport}} {{item.reference}} for {{item.duration.h}}h {{item.duration.m}}m   </p>
+          </div>
+
+      </template>
+      <template is="dom-if" if="{{!renderedCount}}">
+          <div class="card">
+              <h4>Result</h4>
+              <p> Please select departure/destination</p>
+          </div>
+      </template>
+  </template>
+
+  <script>
+    Polymer({
+        is: 'my-result',
+        properties: {
+            data: { type: Array, value: [{ name: "wakeel", shortText: "khan" }, { name: "wakeel", shortText: "khan" }]}
+        }
+    });
+  </script>
+</dom-module>

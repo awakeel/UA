@@ -1,0 +1,70 @@
+
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html" />
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html" />
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html" />
+<link rel="import" href="../bower_components/paper-item/paper-item.html" />
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html" />
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html" />
+<link rel="import" href="../bower_components/paper-button/paper-button.html" />
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="my-search">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+
+        padding: 10px;
+      }
+        paper-tabs {
+            width: 400px;
+        }
+
+        .vertical-section-container {
+            max-width: 500px;
+        }
+
+        paper-dropdown-menu {
+            width: 200px;
+            margin-right: 20px;
+    
+    </style>
+
+    <div class="card">
+        <paper-dropdown-menu label="From" >
+            <paper-listbox class="dropdown-content" selected="{{from}}"  attr-for-selected="value">
+                <template is="dom-repeat" items="[[hubs]]">
+                    <paper-item value="{{item}}">{{item}}</paper-item>
+                </template>
+                </paper-listbox>
+           </paper-dropdown-menu>
+
+        <paper-dropdown-menu label="To">
+            <paper-listbox class="dropdown-content" selected="{{to}}" attr-for-selected="value">
+                <template is="dom-repeat" items="[[hubs]]">
+                    <paper-item value="{{item}}">{{item}}</paper-item>
+                </template>
+            </paper-listbox>
+
+        </paper-dropdown-menu>
+
+        <paper-radio-group aria-labelledby="label1"  selected="{{status}}">
+            <paper-radio-button name="1">Fastest</paper-radio-button>
+            <paper-radio-button name="2">Cheapest</paper-radio-button>
+        </paper-radio-group>
+        <paper-button toggles raised class="green" on-click="quickSearch">Quick Search</paper-button>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+        is: 'my-search',
+        properties: { status: { type: String, value: 1 }},
+        quickSearch: function () {
+            document.querySelector('my-app').quickSearch(this.from, this.to, this.status);
+        }
+    });
+  </script>
+</dom-module>

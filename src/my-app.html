@@ -1,0 +1,109 @@
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html" />
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html" />
+<link rel="import" href="my-search.html">
+<link rel="import"  href="my-result.html">
+<link rel="import" href="my-icons.html">
+
+<dom-module id="my-app">
+  <template>
+    <style>
+      :host {
+        --app-primary-color: #4285f4;
+        --app-secondary-color: black;
+
+        display: block;
+      }
+
+      app-header {
+        color: #fff;
+        background-color: var(--app-primary-color);
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      .drawer-list {
+        margin: 0 20px;
+      }
+
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
+
+      .drawer-list a.iron-selected {
+        color: black;
+        font-weight: bold;
+      }
+    </style>
+
+      <!-- Drawer content -->
+       
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <div main-title>Property Finder</div>
+          </app-toolbar>
+        </app-header>
+      <iron-ajax auto url="../data/response.json" params='{{_getParams()}}' handle-as="json" on-response="handleResponse"></iron-ajax>
+
+       
+         
+      <my-search hubs="{{hubs}}"></my-search>
+      <my-result deals="{{deals}}" currency="{{currency}}"></my-result>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'my-app',
+
+      properties: {
+          currency:{type:String, value:"US"},
+          deals: { type: Array, value: [] },
+          hubs: { type: Array, value: [] }
+      },
+      quickSearch: function (from, to, status) {
+          console.log(from + '' + status);
+          this.deals = this.data;
+          this.deals = this.deals.filter(function (item) {
+              return item.departure.toLowerCase() == from.toLowerCase() && item.arrival.toLowerCase() == to.toLowerCase();
+          });
+
+          if (Number(status) == 2) { this.deals = this.deals.sort((a, b) => Number(a.cost) - Number(b.cost)); }
+          else {
+          this.deals = this.deals.sort((a, b) =>
+              (Number(a.duration.h * 60) + Number(a.duration.m)) - (Number(b.duration.h * 60) + Number(b.duration.m))
+             );
+          }
+          
+        //  var descending = homes.sort((a, b) => Number(b.price) - Number(a.price));
+      },
+      handleResponse: function (req) {
+          this.data = req.detail.response.deals;
+          this.deals = req.detail.response.deals;
+          this.hubs = req.detail.response.deals.map(function (a) { return a.arrival; });
+          this.hubs = this.hubs.filter(function (item, pos, self) {
+                return self.indexOf(item) == pos;
+            })
+          console.log(this.hubs);
+          this.currency = req.detail.response.currency;
+      },
+      _getParams: function () {
+         // return { 'deals.arrival': 'asfasdf' };
+      }
+    });
+  </script>
+</dom-module>
