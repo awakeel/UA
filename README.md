@@ -1,9 +1,16 @@
 # UA
 Pull or download to local system
+
+
+
 Shift + right click to open node window
+
 -- bower install 
--- bower install polymer/paper-elements
--- bowers install polymer/iron-elements
+
+
+
+bower install polymerelements/iron-elements
+bower install polymerelements/paper-elements
 
 
 To run
