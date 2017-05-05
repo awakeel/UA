@@ -21,4 +21,4 @@ To run
 
 polymer serve
 
-<img src="UA/file.png"/>
+<img src="file.png"/>
