@@ -20,3 +20,5 @@ bower install polymerelements/paper-elements
 To run
 
 polymer serve
+
+<img src="UA/file.png"/>
