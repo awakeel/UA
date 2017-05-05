@@ -10,6 +10,10 @@ Shift + right click to open node window
 
 
 bower install polymerelements/iron-elements
+
+
+
+
 bower install polymerelements/paper-elements
 
 
