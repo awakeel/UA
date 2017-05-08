@@ -1,7 +1,8 @@
 # UA
-Pull or download to local system
+clone or download
 
 
+Go to UA directory
 
 Shift + right click to open node window
 
@@ -16,8 +17,7 @@ bower install polymerelements/iron-elements
 
 bower install polymerelements/paper-elements
 
-
-To run
+How to view in browser?
 
 polymer serve
 
