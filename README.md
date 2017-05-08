@@ -16,7 +16,7 @@ Install all dependencies -
 3. bower install polymerelements/paper-elements
 
 
-How to view in browser?
+If you are done with all installation, let's run last command
 
 polymer serve
 
